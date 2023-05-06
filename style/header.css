@@ -1,0 +1,55 @@
+.dropdown-menu.header-menu-choose {
+    display: block;
+    opacity: 0;
+    transform: translateY(20px);
+    visibility: hidden;
+    transition: all .1s linear;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.dropdown:hover .header-menu-choose {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+
+
+/* 
+.dropdown-menu {
+    display: block;
+} */
+
+.list-group-container {
+    padding-bottom: 12px;
+}
+
+.list-group-container .list-group-item-action:hover {
+    background-color: unset;
+}
+
+.list-group-item:hover {
+    color: var(--bs-primary);
+}
+
+.list-product-content {
+    margin: 0;
+    padding: 16px 16px 8px;
+}
+
+.list-group-container .list-group-item {
+    border: none;
+    font-size: 0.875rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+
+.list-group {
+    width: 200px;
+}
+
+.list-product-by-hot .list-group {
+    width: 260px;
+}
