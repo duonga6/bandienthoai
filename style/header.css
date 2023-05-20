@@ -6,7 +6,11 @@
     transition: all .1s linear;
 }
 
-.dropdown-toggle::after {
+.btn.noborder.show {
+    border: none;
+}
+
+.hide.dropdown-toggle::after {
     display: none;
 }
 
@@ -15,12 +19,6 @@
     transform: translateY(0);
     visibility: visible;
 }
-
-
-/* 
-.dropdown-menu {
-    display: block;
-} */
 
 .list-group-container {
     padding-bottom: 12px;
