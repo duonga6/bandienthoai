@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="./style/footer.css">
   <link rel="stylesheet" href="./style/cart.css">
   <link rel="stylesheet" href="./style/products.css">
+  <link rel="stylesheet" href="./style/oder.css">
 </head>
 
 <body>

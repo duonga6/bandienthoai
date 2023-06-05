@@ -1,26 +1,36 @@
 <?php
-$sql_dm = "SELECT * FROM tbl_hangsp ORDER BY stt ASC";
-$query_dm = mysqli_query($connect, $sql_dm);
+$sql_hangsp = "SELECT * FROM tbl_hangsp ORDER BY stt ASC";
+$query_hangsp = mysqli_query($connect, $sql_hangsp);
+
+$sql_mucgia = "SELECT * FROM tbl_mucgia ORDER BY mucgia ASC";
+$query_mucgia = mysqli_query($connect, $sql_mucgia);
 
 if (isset($_GET['dangxuat']) && $_GET['dangxuat'] == 1) {
     unset($_SESSION['dangky']);
 }
+
+if (isset($_GET['navigate']) && $_GET['navigate'] == 'dangxuat') {
+    unset($_SESSION['login']);
+    header('Location: index.php');
+}
+
 ?>
 
 <div class="header">
-    <div class="container-xxl text-center header-top">
+    <div class="container text-center header-top">
         <div class="row">
-            <div class="col-lg-3">
-                <a href="" class=""><img src="img/logo.png" class="img-fluid" alt=""></a>
+            <div class="col-3">
+                <a href="index.php" class=""><img src="img/logo.png" class="img-fluid" alt=""></a>
             </div>
-            <div class="col-lg-5 d-flex align-items-center">
-                <form class="d-flex w-100" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Nhập từ khóa tìm kiếm..."
+            <div class="col-5 d-flex align-items-center">
+                <form class="d-flex w-100" role="search" action="index.php?navigate=timkiem" method="POST">
+                    <input class="form-control me-2" type="search" placeholder="Nhập từ khóa tìm kiếm..." name="tukhoa"
                         aria-label="Nhập từ khóa tìm kiếm...">
-                    <button class="btn btn-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button class="btn btn-primary" type="submit" name="timkiemsp"><i
+                            class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
             </div>
-            <div class="col-lg-2">
+            <div class="col-2">
                 <div class="row h-100 align-items-center">
                     <div class="col-3">
                         <i class="fa-solid fa-phone fs-3 ms-4 text-primary"></i>
@@ -31,21 +41,54 @@ if (isset($_GET['dangxuat']) && $_GET['dangxuat'] == 1) {
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-2">
                 <div class="row h-100 align-item-center">
                     <div class="col-5">
                         <div class="row h-100 align-items-center">
                             <div class="col-6">
-                                <a href="index.php?navigate=giohang"
-                                    class="link-underline link-underline-opacity-0 d-block mt-2">
-                                    <i class="fa-solid fa-cart-shopping w-100 fs-4"></i>
-                                </a>
+                                <div class="cart-block">
+                                    <a href="index.php?navigate=giohang"
+                                        class="link-underline link-underline-opacity-0 d-block mt-2">
+                                        <i class="fa-solid fa-cart-shopping w-100 fs-4"></i>
+                                        <?php
+                                        if (isset($_SESSION['carts']) && count($_SESSION['carts']) > 0) {
+                                            ?>
+                                        <div class="cart-quantity">
+                                            <?php
+                                                    echo count($_SESSION['carts']);
+                                                ?>
+                                        </div>
+                                        <?php
+                                        }
+                                    ?>
+                                    </a>
+                                </div>
                             </div>
                             <div class="col-6">
-                                <a href="index.php?navigate=donhang"
-                                    class="link-underline link-underline-opacity-0 d-block mt-2">
-                                    <i class="fa-solid fa-truck-fast w-100 fs-4"></i>
-                                </a>
+                                <div class="cart-block">
+                                    <a href="index.php?navigate=xemdonhang"
+                                        class="link-underline link-underline-opacity-0 d-block mt-2">
+                                        <i class="fa-solid fa-truck w-100 fs-4"></i>
+                                    <?php
+                                        if (isset($_SESSION['login'])) {
+                                            $sql_cart = "SELECT COUNT(*) FROM tbl_cart WHERE id_khachhang = ".$_SESSION['login']."";
+                                            $query_cart = mysqli_query($connect, $sql_cart);
+                                            $cart_quantity = mysqli_fetch_array($query_cart)[0];
+                                            if ($cart_quantity > 0) {
+                                                ?>
+
+                                            <div class="cart-quantity" style="right:5px;top:2px;">
+                                                <?php
+                                                    echo $cart_quantity;
+                                                ?>
+                                            </div>
+                                    <?php
+                                            }
+                                        }
+                                    
+                                    ?>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -53,20 +96,27 @@ if (isset($_GET['dangxuat']) && $_GET['dangxuat'] == 1) {
                         <div class="row h-100 align-items-center g-0">
                             <div class="col-12">
                                 <?php
-                                if (!isset($_SESSION['dangky'])) {
+                                if (!isset($_SESSION['login'])) {
                                     ?>
-                                <a href="index.php?navigate=dangnhap"
-                                    class="link-underline link-underline-opacity-0 col-6">Đăng nhập</a>
+                                <a href="user/login.php" class="link-underline link-underline-opacity-0 col-6">Đăng
+                                    nhập</a>
                                 <?php
                                 } else {
                                     ?>
                                 <div class="dropdown">
-                                    <button class="btn noborder dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false">Username</button>
+                                    <button class="btn noborder dropdown-toggle text-primary" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false"><?php 
+                                                $sql = "SELECT * FROM tbl_dangky WHERE id_khachhang = ".$_SESSION['login']."";
+                                                $row = mysqli_query($connect, $sql);
+                                                $row_data = mysqli_fetch_array($row);
+
+                                                echo $row_data['hoten'];
+                                             ?></button>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Thông tin</a></li>
-                                        <li><a class="dropdown-item" href="#">Cài đặt</a></li>
-                                        <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                                        <li><a class="dropdown-item" href="index.php?navigate=thongtin">Thông tin</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="index.php?navigate=dangxuat">Đăng xuất</a>
+                                        </li>
                                     </ul>
                                 </div>
                                 <?php
@@ -80,8 +130,8 @@ if (isset($_GET['dangxuat']) && $_GET['dangxuat'] == 1) {
         </div>
     </div>
     <div class="bg-primary-subtle header-bot">
-        <div class="container-xxl">
-            <nav class="navbar navbar-expand-lg p-0">
+        <div class="container">
+            <nav class="navbar navbar-expand p-0">
                 <div class="container-fluid">
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav fs-6 nav-header">
@@ -98,8 +148,8 @@ if (isset($_GET['dangxuat']) && $_GET['dangxuat'] == 1) {
                                             <div class="list-group">
                                                 <p class="list-product-content fw-bold">Điện thoại theo hãng</p>
                                                 <?php
-                                                while ($row_dm = mysqli_fetch_array($query_dm)) {
-                                                    echo "<a href='#' class='list-group-item list-group-item-action'>" . $row_dm['tenhangsp'] . "</a>";
+                                                while ($row_hangsp = mysqli_fetch_array($query_hangsp)) {
+                                                    echo "<a href='index.php?navigate=theohang&hang_id=".$row_hangsp['id_hangsp']."' class='list-group-item list-group-item-action'>" . $row_hangsp['tenhangsp'] . "</a>";
                                                 }
                                                 ?>
                                             </div>
@@ -107,18 +157,25 @@ if (isset($_GET['dangxuat']) && $_GET['dangxuat'] == 1) {
                                         <div class="list-product-by-price">
                                             <div class="list-group">
                                                 <p class="list-product-content fw-bold">Chọn theo mức giá</p>
-                                                <a href='#' class='list-group-item list-group-item-action'>Dưới 5
-                                                    triệu</a>
-                                                <a href='#' class='list-group-item list-group-item-action'>Từ 5 - 10
-                                                    triệu</a>
-                                                <a href='#' class='list-group-item list-group-item-action'>Từ 10 - 15
-                                                    triệu</a>
-                                                <a href='#' class='list-group-item list-group-item-action'>Từ 15 - 20
-                                                    triệu</a>
-                                                <a href='#' class='list-group-item list-group-item-action'>Từ 20 - 30
-                                                    triệu</a>
-                                                <a href='#' class='list-group-item list-group-item-action'>Trên 30
-                                                    triệu</a>
+                                                <?php
+                                                    $data = array();
+                                                    $count = 0;
+                                                    while ($row = mysqli_fetch_array($query_mucgia)) {
+                                                        $data[$count] = $row['mucgia'];
+                                                        $count++;
+                                                    }
+                                                    for ($i = 0; $i < $count; $i++) {
+                                                        if ($i == 0 && $data[$i] != 0) {
+                                                            echo "<a href='index.php?navigate=price_product&from=0&to=".$data[$i]."' class='list-group-item list-group-item-action'>Dưới ".$data[$i]." triệu</a>";
+                                                        } elseif ($data[$i] == 0) {
+                                                            echo "<a href='index.php?navigate=price_product&from=0&to=".$data[$i+1]."' class='list-group-item list-group-item-action'>Dưới ".$data[$i+1]." triệu</a>";
+                                                        } else if ($i >= 1 && $i < $count - 1) {
+                                                            echo "<a href='index.php?navigate=price_product&from=".$data[$i]."&to=".$data[$i + 1]."' class='list-group-item list-group-item-action'>Từ ".$data[$i]." - ".$data[$i + 1]." triệu</a>";
+                                                        } else {
+                                                            echo "<a href='index.php?navigate=price_product&from=".$data[$i]."&to=-1' class='list-group-item list-group-item-action'>Trên ".$data[$i]." triệu</a>";
+                                                        }
+                                                    }
+                                                ?>
                                             </div>
                                         </div>
                                         <div class="list-product-by-hot">
