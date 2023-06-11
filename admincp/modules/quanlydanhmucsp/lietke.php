@@ -1,5 +1,5 @@
 <?php
-    $sql_lietke = "SELECT * FROM tbl_hangsp ORDER BY id_hangsp ASC";
+    $sql_lietke = "SELECT * FROM tbl_hangsp ORDER BY stt ASC";
     $query_lietke_hsp = mysqli_query($connect, $sql_lietke);
 
     $sql_mucgia = "SELECT * FROM tbl_mucgia ORDER BY mucgia ASC";

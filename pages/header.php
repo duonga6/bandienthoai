@@ -23,7 +23,9 @@ if (isset($_GET['navigate']) && $_GET['navigate'] == 'dangxuat') {
                 <a href="index.php" class=""><img src="img/logo.png" class="img-fluid" alt=""></a>
             </div>
             <div class="col-5 d-flex align-items-center">
-                <form class="d-flex w-100" role="search" action="index.php?navigate=timkiem" method="POST">
+                <form class="d-flex w-100" role="search"
+                    action="index.php?navigate=timkiem <?php if(isset($_GET['tukhoa'])) echo $_GET['tukhoa'] ?>"
+                    method="POST">
                     <input class="form-control me-2" type="search" placeholder="Nhập từ khóa tìm kiếm..." name="tukhoa"
                         aria-label="Nhập từ khóa tìm kiếm...">
                     <button class="btn btn-primary" type="submit" name="timkiemsp"><i
@@ -69,7 +71,7 @@ if (isset($_GET['navigate']) && $_GET['navigate'] == 'dangxuat') {
                                     <a href="index.php?navigate=xemdonhang"
                                         class="link-underline link-underline-opacity-0 d-block mt-2">
                                         <i class="fa-solid fa-truck w-100 fs-4"></i>
-                                    <?php
+                                        <?php
                                         if (isset($_SESSION['login'])) {
                                             $sql_cart = "SELECT COUNT(*) FROM tbl_cart WHERE id_khachhang = ".$_SESSION['login']."";
                                             $query_cart = mysqli_query($connect, $sql_cart);
@@ -77,12 +79,12 @@ if (isset($_GET['navigate']) && $_GET['navigate'] == 'dangxuat') {
                                             if ($cart_quantity > 0) {
                                                 ?>
 
-                                            <div class="cart-quantity" style="right:5px;top:2px;">
-                                                <?php
+                                        <div class="cart-quantity" style="right:5px;top:2px;">
+                                            <?php
                                                     echo $cart_quantity;
                                                 ?>
-                                            </div>
-                                    <?php
+                                        </div>
+                                        <?php
                                             }
                                         }
                                     
@@ -139,8 +141,8 @@ if (isset($_GET['navigate']) && $_GET['navigate'] == 'dangxuat') {
                                 <button class="btn btn-dmsp dropdown-toggle hide d-flex align-items-center p-0"
                                     type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
-                                    <i class="fa-solid fa-bars-staggered"></i>
-                                    <a class="nav-link" href="#">Danh mục sản phẩm</a>
+                                    <i class="fa-solid fa-bars me-2"></i>
+                                    Danh mục sản phẩm
                                 </button>
                                 <div class="dropdown-menu p-0 header-menu-choose" aria-labelledby="dropdownMenuButton">
                                     <div class="list-group-container d-flex ">
@@ -210,4 +212,56 @@ if (isset($_GET['navigate']) && $_GET['navigate'] == 'dangxuat') {
             </nav>
         </div>
     </div>
+    <div class="modal-notify <?php if(isset($_SESSION['thongbao']) && $_SESSION['thongbao'] != '') echo "show" ?>">
+        <div class="notify">
+            <div class="notify-header">
+                <p class="fs-5 fw-semibold mb-0">
+                    Thông báo
+                </p>
+            </div>
+            <div class="content">
+                <p class="fs-6 fw-semibold mb-0 text-center notify-contents px-4">
+                    <?php
+
+                    if ($_SESSION['thongbao'] == 'hethang') {
+                        echo "Không thể thêm<br>Sản phẩm này đã hết hàng !";
+                        unset($_SESSION['thongbao']);
+                    } elseif ($_SESSION['thongbao'] == 'dathangok') {
+                        echo "Đặt hàng thành công !";
+                        unset($_SESSION['thongbao']);
+                    } elseif ($_SESSION['thongbao'] == 'suadhok') {
+                        echo "Đã cập nhật đơn hàng !";
+                        unset($_SESSION['thongbao']);
+                    } elseif ($_SESSION['thongbao'] == 'nhandh') {
+                        echo "Nhận hàng thành công !";
+                        unset($_SESSION['thongbao']);
+                    } elseif ($_SESSION['thongbao'] == 'huydh') {
+                        echo "Đã hủy đơn hàng !";
+                        unset($_SESSION['thongbao']);
+                    }                  
+                ?></p>
+            </div>
+            <div class="action">
+                <button id="btnhiden" class="btn btn-primary w-25">OK</button>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+const btnhiden = document.querySelector('#btnhiden');
+const modal = document.querySelector('.modal-notify');
+const notifyContent = document.querySelector('.notify');
+
+notifyContent.addEventListener('click', function(e) {
+    e.stopPropagation();
+})
+
+btnhiden.addEventListener('click', function() {
+    modal.classList.remove('show');
+})
+
+modal.addEventListener('click', function() {
+    modal.classList.remove('show');
+})
+</script>

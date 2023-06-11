@@ -2,12 +2,14 @@
 
 
     if (isset($_POST['xacnhan'])) {
+        session_start();
         include('../../admincp/config/connect.php');
         $sdt = $_POST['sdt'];
         $diachi = $_POST['diachi'];
         $tt = $_POST['httt'];
         $sql = "UPDATE tbl_cart SET sdt = '".$sdt."', dc = '".$diachi."', thanhtoan = '".$tt."' WHERE code_cart=".$_GET['code_cart']."";
         $query = mysqli_query($connect, $sql);
+        $_SESSION['thongbao'] = 'suadhok';
         header('Location: ../../index.php?navigate=chitietdh&code_cart='.$_GET['code_cart'].'');
     } else {
         $sql_cart = "SELECT * FROM tbl_cart

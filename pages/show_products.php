@@ -11,7 +11,8 @@
             </div>
         </div>
         <div class="col-md-6">
-            <form action="./pages/main/themgiohang.php?query=them&idsp=<?php echo $row_chitiet['id_sp']?>" method="POST">
+            <form action="./pages/main/themgiohang.php?query=them&idsp=<?php echo $row_chitiet['id_sp']?>"
+                method="POST">
 
                 <div class="chitiet_sanpham">
                     <h3 style="margin: 8px 0px;"><?php echo $row_chitiet['ten_sp'] ?></h3>
@@ -42,7 +43,8 @@
                                 <div class="soluong-container">
                                     <div class="soluong-sp-dem">
                                         <a class="soluong-sp-dem-icon" href="#"><i class="fa-solid fa-minus"></i></a>
-                                        <input class="soluong-sp-input text-center ms-2 me-2" type="text" name="soluong" value="1" style="width:30px">
+                                        <input class="soluong-sp-input text-center ms-2 me-2" type="text" name="soluong"
+                                            value="1" style="width:30px">
                                         <a class="soluong-sp-dem-icon" href="#"><i class="fa-solid fa-plus"></i></a>
                                     </div>
                                 </div>
@@ -79,10 +81,10 @@
                     <div class="mota">
                         <p class="mota-text"><b>Mô tả:</b> <?php echo $row_chitiet['mota']?> </p>
                     </div>
-                    <div class="input-themcart d-inline-flex align-items-center bg-danger rounded"
-                        style="width: 160px; height: 60px">
-                        <i class="fa-solid fa-cart-plus text-white mr-2"></i>
-                        <input class="btn btn-danger flex-grow-1 text-white" style="height: 60px" type="submit" name="themgiohang" value="Thêm Giỏ Hàng">
+                    <div class="input-themcart d-inline-flex align-items-center bg-danger rounded">
+                        <button type="submit" class="btn btn-danger px-3 py-2">
+                            <i class="fa-solid fa-cart-plus text-white mr-2"></i>
+                            Thêm vào giỏ hàng</button>
                     </div>
                 </div>
             </form>
@@ -97,19 +99,22 @@ var soluong = document.querySelector('.soluong-sp-input');
 var demPlus = document.querySelector('.soluong-sp-dem-icon .fa-plus');
 var demMins = document.querySelector('.soluong-sp-dem-icon .fa-minus');
 var soluongMax = Number(document.querySelector('.soluong-sp-cosan').innerHTML);
+const notifyInner = document.querySelector('.notify-contents');
 
 demPlus.addEventListener('click', function() {
     if (Number(soluong.value) >= soluongMax) {
-        alert("Số lượng sản phẩm còn lại chỉ còn: " + soluongMax);
+        notifyInner.innerHTML = "Không thể thêm<br>Sản phẩm này đã hết hàng !";
+        modal.classList.add('show');
         soluong.value = soluongMax;
     } else {
-        soluong.value = Number(soluong.value)+1;
+        soluong.value = Number(soluong.value) + 1;
     }
 });
 
 demMins.addEventListener('click', function() {
     if (soluong.value <= 1) {
-        alert('Số lượng sản phẩm phải lớn hơn bằng 1');
+        notifyInner.innerHTML = "Số lượng sản phẩm phải lớn hơn bằng 1";
+        modal.classList.add('show');
         soluong.value = 1;
     } else {
         soluong.value--;

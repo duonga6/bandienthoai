@@ -16,6 +16,9 @@ if (isset($_POST['login'])) {
         if (isset($_SESSION['dathang'])) {
             unset($_SESSION['dathang']);
             header("Location:../index.php?navigate=dathang");
+        }elseif(isset($_SESSION['xemdonhang'])){
+            unset($_SESSION['xemdonhang']);
+            header("Location:../index.php?navigate=xemdonhang");
         } else {
             header("Location:../index.php");
         }

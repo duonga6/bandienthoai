@@ -6,11 +6,11 @@
             <form action="./modules/quanlydanhmucsp/xuly.php" method="post">
                 <div class="input-group input-group-sm mb-2 row">
                     <p class="fs-6 mb-0 col-4">Tên hãng</p>
-                    <input type="text" class="form-control col-8" name="tenhangsp">
+                    <input type="text" class="form-control col-8" name="tenhangsp" required>
                 </div>
                 <div class="input-group input-group-sm mb-2 row">
                     <p class="fs-6 mb-0 col-4">Thứ tự</p>
-                    <input type="text" class="form-control col-8" name="thutusp">
+                    <input type="text" class="form-control col-8" name="thutusp" required>
                 </div>
                 <button type="submit" class="btn btn-primary btn-sm" name="themhangsp">Thêm</button>
             </form>
@@ -22,7 +22,7 @@
             <form action="./modules/quanlydanhmucsp/xuly.php" method="post">
                 <div class="input-group input-group-sm mb-2 row">
                     <p class="fs-6 mb-0 col-4">Mức giá</p>
-                    <input type="text" class="form-control col-8" name="mucgia">
+                    <input type="text" class="form-control col-8" name="mucgia" required>
                 </div>
                 <button type="submit" class="btn btn-primary btn-sm" name="themmucgia">Thêm</button>
             </form>

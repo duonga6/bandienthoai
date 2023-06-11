@@ -1,5 +1,5 @@
 <?php
-    $sql_cart = "SELECT * FROM tbl_cart INNER JOIN tbl_dangky ON tbl_cart.id_khachhang = tbl_dangky.id_khachhang";
+    $sql_cart = "SELECT * FROM tbl_cart INNER JOIN tbl_dangky ON tbl_cart.id_khachhang = tbl_dangky.id_khachhang ORDER BY ngaydat DESC";
     $query_cart = mysqli_query($connect, $sql_cart);
 ?>
 
@@ -10,7 +10,7 @@
             <tr>
                 <th scope="col" class="col-1">Mã DH</th>
                 <th scope="col" class="col-1">Tài khoản</th>
-                <th scope="col" class="col-1">Tên KH</th>
+                <th scope="col" class="col-1">Người nhận</th>
                 <th scope="col" class="col-1">Địa chỉ</th>
                 <th scope="col" class="col-1">SDT</th>
                 <th scope="col" class="col-1">HTTT</th>
@@ -25,7 +25,9 @@
                 while($row = mysqli_fetch_array($query_cart)){
             ?>
             <tr class="text-canter" style="height:100px">
-                <td><?php echo $row['code_cart'] ?></td>
+                <td>
+                    <span><?php echo $row['code_cart'] ?></span>
+                </td>
                 <td><?php echo $row['tentaikhoan'] ?></td>
                 <td><?php echo $row['hoten'] ?></td>
                 <td><?php echo $row['dc'] ?></td>
@@ -37,7 +39,7 @@
                     <?php 
                         if ($row['trangthai'] == 1) {
                             echo "<p class='text-danger'>Chờ xác nhận</p>";
-                            echo "<a class='link-offset-2 link-underline link-underline-opacity-0' href=''>Xác nhận (Giao hàng)</a>";
+                            echo "<a class='link-offset-2 link-underline link-underline-opacity-0' href='./modules/quanlydonhang/xuly.php?query=xacnhan&code_cart=".$row['code_cart']."'>Xác nhận (Giao hàng)</a>";
                         } elseif ($row['trangthai'] == 2) {
                             echo "<span class='text-primary'>Đang giao</span>";
                         } else {
@@ -46,9 +48,11 @@
                     ?>
                 </td>
                 <td>
-                    <a class="link-offset-2 link-underline link-underline-opacity-0" href="#">Xem chi tiết</a> |
-                    <a class="link-offset-2 link-underline link-underline-opacity-0" href="index.php?navigate=qldh&query=sua?code_cart=<?php echo $row['code_cart'] ?>">Sửa</a> |
+                    <a class="link-offset-2 link-underline link-underline-opacity-0" href="index.php?navigate=qldh&query=chitiet&code_cart=<?php echo $row['code_cart'] ?>&id_kh=<?php echo $row['id_khachhang'] ?>">Xem chi tiết</a> |
+                    <a class="link-offset-2 link-underline link-underline-opacity-0" href="index.php?navigate=qldh&query=sua&code_cart=<?php echo $row['code_cart'] ?>">Sửa</a> |
                     <a class="link-offset-2 link-underline link-underline-opacity-0" href="./modules/quanlydonhang/xuly.php?query=xoa&code_cart=<?php echo $row['code_cart'] ?>">Xóa</a>
+                    <br />
+                    <a class="link-offset-2 link-underline link-underline-opacity-0" href="index.php?navigate=qldh&query=indonhang&code_cart=<?php echo $row['code_cart'] ?>&id_kh=<?php echo $row['id_khachhang'] ?>">In đơn hàng</a>
                 </td>
             </tr>
             <?php

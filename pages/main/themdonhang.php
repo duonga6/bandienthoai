@@ -22,7 +22,7 @@
         }
 
         unset($_SESSION['carts']);
-        echo "<script>alert('Đặt hàng thành công !  ')</script>";
-        header('Location: ../../index.php?navigate=xemdonhang');
+        $_SESSION['thongbao'] = 'dathangok';
+        header('Location: ../../index.php?navigate=chitietdh&code_cart='.$code_cart.'');
     }
 ?>

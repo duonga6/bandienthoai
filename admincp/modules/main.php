@@ -29,6 +29,19 @@
         header('Location: ../index.php');
     }elseif ($trangthai == 'qldh' && $query == 'them') {
         include('./modules/quanlydonhang/lietke.php');
+    }elseif ($trangthai == 'qldh' && $query == 'sua') {
+        include('./modules/quanlydonhang/sua.php');
+    }elseif ($trangthai == 'qldh' && $query == 'chitiet') {
+        include('./modules/quanlydonhang/chitiet.php');
+    }elseif ($trangthai == 'qldh' && $query == 'indonhang') {
+        include('./modules/quanlydonhang/indonhang.php');
+    }elseif ($trangthai == 'qlnd' && $query == 'them') {
+        include('./modules/quanlynguoidung/them.php');
+        include('./modules/quanlynguoidung/lietke.php');
+    }elseif ($trangthai == 'qlnd' && $query == 'sua') {
+        include('./modules/quanlynguoidung/sua.php');
+    }  else {
+        include('./modules/dashboard.php');
     }
     
 ?>

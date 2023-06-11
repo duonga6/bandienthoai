@@ -19,11 +19,14 @@
             $tong = 0;
             foreach($_SESSION['carts'] as $row) {
                 $tong += $row['soluong'] * $row['gia'];
+                $query_sp = mysqli_query($connect, "SELECT * FROM tbl_sanpham WHERE id_sp=".$row['id']."");
+                $data_sp = mysqli_fetch_array($query_sp);
             ?>
             <div class="row cart-product-item mb-2 ms-1 me-1">
                 <div class="col-5 d-flex h-100">
-                    <div class="col-6 cart-product-name d-flex align-items-center justify-content-center fw-semibold">
-                        <p class="m-0"><?php echo $row['tensp'] ?></p>
+                    <div class="col-6 cart-product-name d-flex flex-column align-items-center justify-content-center fw-semibold">
+                        <p class="m-0 fs-6"><?php echo $row['tensp'] ?></p>
+                        <p class="m-0 fw-normal fs-6"><?php echo $data_sp['ram']?>GB-<?php echo $data_sp['rom']?>GB</p>
                     </div>
                     <div class="col-6 cart-product-image d-flex align-items-center justify-content-center">
                         <img src="./admincp/modules/quanlysp/uploads/<?php echo $row['hinhanh'] ?>" alt="">
@@ -118,11 +121,5 @@
 
 <?php
 
-    }
-?>
-
-<?php
-    if (isset($_GET['thongbao']) && $_GET['thongbao'] == 'hethang') {
-        echo "<script>alert('Không thể thêm, đã hết sản phẩm này trong kho !')</script>";
     }
 ?>

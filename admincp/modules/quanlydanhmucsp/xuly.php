@@ -12,7 +12,8 @@
     // Xóa hãng sản phẩm
     if (isset($_GET['query']) && $_GET['query'] == 'xoahsp') {
         $id = $_GET['idxoa'];
-        $sql_xoa = "DELETE FROM tbl_hangsp WHERE id_hangsp = '".$id."'";
+        $sql_xoa = "DELETE FROM tbl_hangsp WHERE id_hangsp = $id";
+        mysqli_query($connect, "UPDATE tbl_sanpham SET id_hangsp = null WHERE id_hangsp = $id");
         mysqli_query($connect, $sql_xoa);
     }
     // Sửa hãng sản phẩm

@@ -45,7 +45,8 @@
             
 
             if ($hethang) {
-                header('Location: ../../index.php?navigate=giohang&thongbao=hethang');
+                $_SESSION['thongbao'] = 'hethang';
+                header('Location: ../../index.php?navigate=giohang');
             } else {
                 header('Location: ../../index.php?navigate=giohang');
             }

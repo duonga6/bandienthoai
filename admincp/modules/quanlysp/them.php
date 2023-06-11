@@ -10,15 +10,15 @@
                     </div>
                     <div class="input-group input-group-sm mb-2 row">
                         <p class="fs-6 mb-0 col-4 fw-bold">Tên sản phẩm</p>
-                        <input type="text" class="form-control col-8" name="tensp">
+                        <input type="text" class="form-control col-8" required name="tensp">
                     </div>
                     <div class="input-group input-group-sm mb-2 row">
                         <p class="fs-6 mb-0 col-4 fw-bold">Hình ảnh</p>
-                        <input type="file" class="form-control col-8" name="hinhanh">
+                        <input type="file" class="form-control col-8" required name="hinhanh">
                     </div>
                     <div class="input-group input-group-sm mb-2 row">
                             <p class="fs-6 mb-0 col-4 fw-bold">Hãng sản phẩm</p>
-                            <select class="form-control col-8 " name="idhangsp">
+                            <select class="form-control col-8 " required name="idhangsp">
                             <?php
                                 $sql_hang="SELECT * FROM tbl_hangsp ORDER BY id_hangsp ASC";
                                 $query_hang=mysqli_query($connect,$sql_hang);
@@ -33,35 +33,35 @@
                     </div>
                     <div class="input-group input-group-sm mb-2 row">
                         <p class="fs-6 mb-0 col-4 fw-bold">Giá</p>
-                        <input type="number" class="form-control col-8" name="giasp">
+                        <input type="number" class="form-control col-8" required name="giasp">
                     </div>
                     <div class="input-group input-group-sm mb-2 row">
                         <p class="fs-6 mb-0 col-4 fw-bold">Kích thước</p>
-                        <input type="text" class="form-control col-8" name="ktmh">
+                        <input type="text" class="form-control col-8" required name="ktmh">
                     </div>
                     <div class="input-group input-group-sm mb-2 row">
                         <p class="fs-6 mb-0 col-4 fw-bold">Camera</p>
-                        <input type="text" class="form-control col-8" name="camera">
+                        <input type="text" class="form-control col-8" required name="camera">
                     </div>
                     <div class="input-group input-group-sm mb-2 row">
                         <p class="fs-6 mb-0 col-4 fw-bold">Chipset</p>
-                        <input type="text" class="form-control col-8" name="chipset">
+                        <input type="text" class="form-control col-8" required name="chipset">
                     </div>
                     <div class="input-group input-group-sm mb-2 row">
                         <p class="fs-6 mb-0 col-4 fw-bold">Ram</p>
-                        <input type="text" class="form-control col-8" name="ram">
+                        <input type="text" class="form-control col-8" required name="ram">
                     </div>
                     <div class="input-group input-group-sm mb-2 row">
                         <p class="fs-6 mb-0 col-4 fw-bold">Rom</p>
-                        <input type="text" class="form-control col-8" name="rom">
+                        <input type="text" class="form-control col-8" required name="rom">
                     </div>
                     <div class="input-group input-group-sm mb-2 row">
                         <p class="fs-6 mb-0 col-4 fw-bold">Pin</p>
-                        <input type="text" class="form-control col-8" name="pin">
+                        <input type="text" class="form-control col-8" required name="pin">
                     </div>
                     <div class="input-group input-group-sm mb-2 row">
                         <p class="fs-6 mb-0 col-4 fw-bold">Sim</p>
-                        <input type="text" class="form-control col-8" name="sim">
+                        <input type="text" class="form-control col-8" required name="sim">
                     </div>
                     <div class="d-flex ">
                         <button type="submit" class="btn btn-primary btn-lg w-40 fw-bold" name="themsp">Thêm</button>

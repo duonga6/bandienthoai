@@ -1,7 +1,7 @@
 <?php
     $sql_cart = "SELECT * FROM tbl_cart
                 INNER JOIN tbl_dangky ON tbl_cart.id_khachhang = tbl_dangky.id_khachhang
-                WHERE tbl_cart.id_khachhang = ".$_SESSION['login']." AND tbl_cart.code_cart = ".$_GET['code_cart']."";
+                WHERE tbl_cart.code_cart = ".$_GET['code_cart']."";
     $query_cart = mysqli_query($connect, $sql_cart);
     $cart_data = mysqli_fetch_array($query_cart);
 
@@ -18,9 +18,9 @@
     <div class="phongbi"></div>
     <div class="person-infor">
         <p class="fs-5 fw-semibold mt-4">Địa chỉ nhận hàng</p>
-        <p class="fs-6 fw-semibold mb-1"><?php echo $cart_data['hoten'] ?></p>
-        <p class="fs-6 fw-medium mb-1"><?php echo $cart_data['sdt'] ?></p>
-        <p class="fs-6 fw-medium mb-1"><?php echo $cart_data['dc'] ?></p>
+        <p class="fs-6 fw-semibold mb-1">Người nhận: <?php echo $cart_data['hoten'] ?></p>
+        <p class="fs-6 fw-medium mb-1">SDT: <?php echo $cart_data['sdt'] ?></p>
+        <p class="fs-6 fw-medium mb-1">Địa chỉ: <?php echo $cart_data['dc'] ?></p>
         <p class="fs-6 fw-medium mb-1">HTTT: <?php echo $cart_data['thanhtoan'] ?></p>
         <p class="fs-6 fw-medium mb-1">Ngày đặt: <?php echo date('d-m-Y', strtotime($cart_data['ngaydat'])) ?></p>
         <p class="fs-6 fw-medium mb-1">Ngày nhận: <?php if ($cart_data['ngaynhan'] != '') echo date('d-m-Y', strtotime($cart_data['ngaynhan'])); else echo "--/--/----" ?></p>
@@ -92,12 +92,15 @@
             $tong = 0;
             while ($row = mysqli_fetch_array($query_sp)){
                 $tong += $row['gia']*$row['sl'];
+                $query_sp = mysqli_query($connect, "SELECT * FROM tbl_sanpham WHERE id_sp=".$row['id_sp']."");
+                $data_sp = mysqli_fetch_array($query_sp);
         ?>
 
         <div class="row cart-product-item mb-2 ms-1 me-1">
             <div class="col-6 d-flex h-100">
-                <div class="col-6 cart-product-name d-flex align-items-center justify-content-center fw-semibold">
+                <div class="col-6 cart-product-name d-flex flex-column align-items-center justify-content-center fw-semibold">
                     <p class="m-0"><?php echo $row['ten_sp'] ?></p>
+                    <p class="m-0 fw-normal fs-6"><?php echo $data_sp['ram']?>GB-<?php echo $data_sp['rom']?>GB</p>
                 </div>
                 <div class="col-6 cart-product-image d-flex align-items-center justify-content-center">
                     <img src="./admincp/modules/quanlysp/uploads/<?php echo $row['hinhanh'] ?>" alt="">
